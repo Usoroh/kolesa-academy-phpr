@@ -5,14 +5,43 @@ use Codeception\Example;
 class ApiCest
 {
     /**
+     * Проверяем позитивные сценарии
+     *
+     * @dataProvider positiveDataProvider
+     *
+     * @param \ApiTester           $I
+     * @param \Codeception\Example $example
+     * @throws \ImagickException
+     */
+    public function positiveTest(ApiTester $I, Example $example)
+    {
+        $I->sendGET(
+            '/', [
+                'url'      => $example['url'],
+                'size'     => "{$example['height']}x{$example['width']}",
+                'cropping' => $example['cropping'],
+            ]
+        );
+        $I->seeResponseCodeIs(200);
+        $I->seeHttpHeader('Content-Type', 'image/jpeg');
+
+        $image = new Imagick();
+        $image->readImageBlob($I->grabResponse());
+        $geometry = $image->getImageGeometry();
+
+        $I->assertEquals($example['width'], $geometry['width'], 'Неправильная ширина');
+        $I->assertEquals($example['height'], $geometry['height'], 'Неправильная высота');
+    }
+
+    /**
      * Проверяем обработку ошибок в негативных сценариях
      *
-     * @dataProvider negativeParamsDataProvider
+     * @dataProvider negativeDataProvider
      *
      * @param \ApiTester           $I
      * @param \Codeception\Example $example
      */
-    public function negativeParamsTest(ApiTester $I, Example $example): void
+    public function negativeTest(ApiTester $I, Example $example): void
     {
         $I->comment("Негативный сценарий для {$example['get']}");
 
@@ -28,7 +57,7 @@ class ApiCest
      *
      * @return string[][]
      */
-    public function negativeParamsDataProvider(): array
+    public function negativeDataProvider(): array
     {
         return [
             [
@@ -69,6 +98,41 @@ class ApiCest
                 'get'   =>
                     '/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=1024x1024&croping=-1',
                 'error' => 'croping',
+            ],
+        ];
+    }
+
+    /**
+     * Дата провайдер для позитивных тестов
+     *
+     * @return array[]
+     */
+    public function positiveDataProvider(): array
+    {
+        return [
+            [
+                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'height'   => 256,
+                'width'    => 256,
+                'cropping' => 0,
+            ],
+            [
+                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'height'   => 1024,
+                'width'    => 1024,
+                'cropping' => 0,
+            ],
+            [
+                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'height'   => 512,
+                'width'    => 1024,
+                'cropping' => 1,
+            ],
+            [
+                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'height'   => 1024,
+                'width'    => 512,
+                'cropping' => 1,
             ],
         ];
     }

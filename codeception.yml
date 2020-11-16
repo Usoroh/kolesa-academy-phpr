@@ -18,3 +18,7 @@ paths:
 settings:
     shuffle: false
     lint: true
+
+modules:
+    enabled:
+        - Asserts
