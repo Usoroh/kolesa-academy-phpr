@@ -6,7 +6,7 @@
 
 Сервис должен реализовывать обработку подобных запросов:
 
-`/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=1024x1024&croping=0`
+`/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=1024x1024&cropping=0`
 
 Где:
 
