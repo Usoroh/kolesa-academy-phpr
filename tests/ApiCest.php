@@ -1,4 +1,6 @@
 <?php
+// phpcs:ignoreFile
+
 use Codeception\Example;
 
 /**
