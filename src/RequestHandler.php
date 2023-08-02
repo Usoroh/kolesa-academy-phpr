@@ -45,6 +45,12 @@ public function validate(): void{
         echo json_encode(["error" => "size - высота и ширина  изображения должен быть в диапазоне 256 - 1024 px"], JSON_UNESCAPED_UNICODE);
         exit;
     }
+
+    if ($this->cropping != 0 && $this->cropping != 1) {
+        http_response_code(400);
+        echo json_encode(["error" => "cropping - параметр может принимать значения 0 или 1"], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
 }
 
 //геттеры для параметров
