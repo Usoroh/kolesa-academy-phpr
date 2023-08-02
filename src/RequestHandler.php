@@ -4,9 +4,9 @@ namespace src;
 
 class RequestHandler
 {
-private string $url;
-private string $size;
-private int $cropping;
+private $url;
+private $size;
+private $cropping;
 
 public function __construct() {
     $this->url = $_GET["url"] ?? null;
