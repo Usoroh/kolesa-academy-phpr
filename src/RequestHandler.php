@@ -18,13 +18,13 @@ public function __construct() {
 public function validate(): void{
     if (!$this->url) {
         http_response_code(400);
-        echo json_encode(["error" => "отсутствует обязательный параметр url"]);
+        echo json_encode(["error" => "отсутствует обязательный параметр url"], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
     if (!$this->size) {
         http_response_code(400);
-        echo json_encode(["error" => "отсутствует обязательный параметр size"]);
+        echo json_encode(["error" => "отсутствует обязательный параметр size"], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
@@ -33,7 +33,7 @@ public function validate(): void{
 
     if (count($dimensions) != 2) {
         http_response_code(400);
-        echo json_encode(["error" => "размер должен быть в формате ВЫСОТАxШИРИНА"]);
+        echo json_encode(["error" => "размер должен быть в формате ВЫСОТАxШИРИНА"], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
@@ -42,7 +42,7 @@ public function validate(): void{
 
     if ($width < 256 || $width > 1024 || $height < 256 || $height > 1024) {
         http_response_code(400);
-        echo json_encode(["error" => "высота и ширина  изображения должен быть в диапазоне 256 - 1024 px"]);
+        echo json_encode(["error" => "высота и ширина  изображения должен быть в диапазоне 256 - 1024 px"], JSON_UNESCAPED_UNICODE);
         exit;
     }
 }
