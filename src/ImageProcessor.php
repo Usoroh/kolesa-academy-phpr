@@ -6,10 +6,9 @@ use Imagick;
 
 class ImageProcessor
 {
-    public function processImage($url, $size, $cropping): Imagick
+    public function processImage($imageData, $size, $cropping): Imagick
     {
-        //грузим данные по ссылке на картинку и создаем объект imagick с которым будем работать
-        $imageData = file_get_contents($url);
+//        $imageData = file_get_contents($url);
         $image = new Imagick();
         $image->readImageBlob($imageData);
 

@@ -2,33 +2,60 @@
 
 namespace src;
 
+use ErrorException;
+
 class RequestHandler
 {
 private $url;
 private $size;
 private $cropping;
+private $imageData;
 
 public function __construct() {
     $this->url = $_GET["url"] ?? null;
     $this->size = $_GET["size"] ?? null;
     $this->cropping = $_GET["cropping"] ?? 0;
+    $this->imageData = null;
 }
 
 //чекаем наличие обязательных параметров
 public function validate(): void{
+    //проверяем что был передан url
     if (!$this->url) {
         http_response_code(400);
         echo json_encode(["error" => "url - отсутствует обязательный параметр url"], JSON_UNESCAPED_UNICODE);
         exit;
     }
+    /*разруливаем кейсы если по url не удалось получить изображение
+      get_file_contents триггерит warning который мы превращаем в exception
+    */
+    set_error_handler(/**
+     * @throws ErrorException
+     */ function($errno, $errstr, $errfile, $errline) {
+        if (!(error_reporting() & $errno)) {
+            return;
+        }
+        throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+    });
 
+    try {
+        $this->imageData = file_get_contents($this->url);
+    } catch (ErrorException $e) {
+        header('Content-type: application/json; charset=utf-8');
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    restore_error_handler();
+
+     //проверяем что был передан размер
     if (!$this->size) {
         http_response_code(400);
         echo json_encode(["error" => "size - отсутствует обязательный параметр size"], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
-    //проверяем чтобы размер изображения передавался в допустим формате и диапазоне
+    //проверяем что размер изображения передан в допустим формате и диапазоне
     $dimensions = explode("x", $this->size);
 
     if (count($dimensions) != 2) {
@@ -46,6 +73,7 @@ public function validate(): void{
         exit;
     }
 
+    //проверяем что параметр обрезания был передан корректно
     if ($this->cropping != 0 && $this->cropping != 1) {
         http_response_code(400);
         echo json_encode(["error" => "cropping - параметр может принимать значения 0 или 1"], JSON_UNESCAPED_UNICODE);
@@ -54,8 +82,8 @@ public function validate(): void{
 }
 
 //геттеры для параметров
-public function getUrl() {
-    return $this->url;
+public function getImageData() {
+    return $this->imageData;
 }
 
 public function getSize() {
