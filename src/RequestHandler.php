@@ -22,6 +22,7 @@ public function __construct() {
 public function validate(): void{
     //проверяем что был передан url
     if (!$this->url) {
+        header('Content-type: application/json; charset=utf-8');
         http_response_code(400);
         echo json_encode(["error" => "url - отсутствует обязательный параметр url"], JSON_UNESCAPED_UNICODE);
         exit;
@@ -51,6 +52,7 @@ public function validate(): void{
     //проверяем что по адресу лежит изображение
     $headers = get_headers($this->url, 1);
     if (strpos(implode(' ', (array) $headers['Content-Type']), 'image/') === false){
+        header('Content-type: application/json; charset=utf-8');
         http_response_code(400);
         echo json_encode(["error" => "url - по адресу должно быть изображение"], JSON_UNESCAPED_UNICODE);
         exit;
@@ -58,6 +60,7 @@ public function validate(): void{
 
      //проверяем что был передан размер
     if (!$this->size) {
+        header('Content-type: application/json; charset=utf-8');
         http_response_code(400);
         echo json_encode(["error" => "size - отсутствует обязательный параметр size"], JSON_UNESCAPED_UNICODE);
         exit;
@@ -67,6 +70,7 @@ public function validate(): void{
     $dimensions = explode("x", $this->size);
 
     if (count($dimensions) != 2) {
+        header('Content-type: application/json; charset=utf-8');
         http_response_code(400);
         echo json_encode(["error" => "size - размер должен быть в формате ВЫСОТАxШИРИНА"], JSON_UNESCAPED_UNICODE);
         exit;
@@ -76,6 +80,7 @@ public function validate(): void{
     $width = $dimensions[1];
 
     if ($width < 256 || $width > 1024 || $height < 256 || $height > 1024) {
+        header('Content-type: application/json; charset=utf-8');
         http_response_code(400);
         echo json_encode(["error" => "size - высота и ширина  изображения должен быть в диапазоне 256 - 1024 px"], JSON_UNESCAPED_UNICODE);
         exit;
@@ -83,6 +88,7 @@ public function validate(): void{
 
     //проверяем что параметр обрезания был передан корректно
     if ($this->cropping != 0 && $this->cropping != 1) {
+        header('Content-type: application/json; charset=utf-8');
         http_response_code(400);
         echo json_encode(["error" => "cropping - параметр может принимать значения 0 или 1"], JSON_UNESCAPED_UNICODE);
         exit;
