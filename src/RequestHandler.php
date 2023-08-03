@@ -48,6 +48,14 @@ public function validate(): void{
     }
     restore_error_handler();
 
+    //проверяем что по адресу лежит изображение
+    $headers = get_headers($this->url, 1);
+    if (!strpos(implode(' ', (array) $headers['Content-Type']), 'image/')){
+        http_response_code(400);
+        echo json_encode(["error" => "url - по адресу должно быть изображение"], JSON_UNESCAPED_UNICODE);
+        exit;
+    };
+
      //проверяем что был передан размер
     if (!$this->size) {
         http_response_code(400);
@@ -55,7 +63,7 @@ public function validate(): void{
         exit;
     }
 
-    //проверяем что размер изображения передан в допустим формате и диапазоне
+    //проверяем что размер изображения передан в допустимом формате и диапазоне
     $dimensions = explode("x", $this->size);
 
     if (count($dimensions) != 2) {
