@@ -81,27 +81,27 @@ class ApiCest
             ],
             [
                 'get'   =>
-                    '/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=1025x1024&cropping=0',
+                    '/?url=https://cdn2.thecatapi.com/images/4eq.jpg&size=1025x1024&cropping=0',
                 'error' => 'size',
             ],
             [
                 'get'   =>
-                    '/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=256x255&cropping=0',
+                    '/?url=https://cdn2.thecatapi.com/images/c6m.jpg&size=256x255&cropping=0',
                 'error' => 'size',
             ],
             [
                 'get'   =>
-                    '/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=256,256&cropping=0',
+                    '/?url=https://cdn2.thecatapi.com/images/bu3.jpg&size=256,256&cropping=0',
                 'error' => 'size',
             ],
             [
                 'get'   =>
-                    '/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=1024x1024&cropping=3',
+                    '/?url=https://cdn2.thecatapi.com/images/2iu.jpg&size=1024x1024&cropping=3',
                 'error' => 'cropping',
             ],
             [
                 'get'   =>
-                    '/?url=https%3A%2F%2Fjob.kolesa.kz%2Ffiles%2F000%2F000%2F_XUou011.jpg&size=1024x1024&cropping=-1',
+                    '/?url=https://cdn2.thecatapi.com/images/eim.jpg&size=1024x1024&cropping=-1',
                 'error' => 'cropping',
             ],
         ];
