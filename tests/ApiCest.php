@@ -116,25 +116,25 @@ class ApiCest
     {
         return [
             [
-                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'url'      => 'https://cdn2.thecatapi.com/images/2bm.jpg',
                 'height'   => 256,
                 'width'    => 256,
                 'cropping' => 0,
             ],
             [
-                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'url'      => 'https://cdn2.thecatapi.com/images/2iu.jpg',
                 'height'   => 1024,
                 'width'    => 1024,
                 'cropping' => 0,
             ],
             [
-                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'url'      => 'https://cdn2.thecatapi.com/images/32d.jpg',
                 'height'   => 512,
                 'width'    => 1024,
                 'cropping' => 1,
             ],
             [
-                'url'      => 'https://job.kolesa.kz/files/000/000/_XUou011.jpg',
+                'url'      => 'https://cdn2.thecatapi.com/images/4eq.jpg',
                 'height'   => 1024,
                 'width'    => 512,
                 'cropping' => 1,
