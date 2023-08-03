@@ -43,14 +43,14 @@ public function validate(): void{
     } catch (ErrorException $e) {
         header('Content-type: application/json; charset=utf-8');
         http_response_code(400);
-        echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['error' => "url - не удалось получить изображение"], JSON_UNESCAPED_UNICODE);
         exit;
     }
     restore_error_handler();
 
     //проверяем что по адресу лежит изображение
     $headers = get_headers($this->url, 1);
-    if (!strpos(implode(' ', (array) $headers['Content-Type']), 'image/')){
+    if (strpos(implode(' ', (array) $headers['Content-Type']), 'image/') === false){
         http_response_code(400);
         echo json_encode(["error" => "url - по адресу должно быть изображение"], JSON_UNESCAPED_UNICODE);
         exit;
