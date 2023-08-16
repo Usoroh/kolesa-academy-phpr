@@ -1,0 +1,6 @@
+{
+    "require": {
+        "ext-imagick": "*",
+        "predis/predis": "^2.2"
+    }
+}
