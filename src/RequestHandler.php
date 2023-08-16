@@ -94,7 +94,7 @@ class RequestHandler
      *
      * @return string
      */
-    public function getImageData()
+    public function getImageData(): ?string
     {
         return $this->imageData;
     }
@@ -104,7 +104,7 @@ class RequestHandler
      *
      * @return string
      */
-    public function getSize()
+    public function getSize(): ?string
     {
         return $this->size;
     }
@@ -114,7 +114,7 @@ class RequestHandler
      *
      * @return int
      */
-    public function getCropping()
+    public function getCropping(): int
     {
         return $this->cropping;
     }

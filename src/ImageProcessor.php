@@ -3,6 +3,7 @@
 namespace src;
 
 use Imagick;
+use ImagickException;
 use Predis\Client;
 
 class ImageProcessor
@@ -27,20 +28,20 @@ class ImageProcessor
      * @param int $cropping Параметр обрезки изображения
      *
      * @return Imagick
+     * @throws ImagickException
      */
-    public function processImage($imageData, $size, $cropping): Imagick
+    public function processImage(string $imageData, string $size, int $cropping): Imagick
     {
         // Генерируем уникального ключа на основе данных изображения, размера и параметра обрезки
         $cacheKey = sha1($imageData . $size . $cropping);
 
         // Проверяем наличия сжатого изображения в кеше
+        $image = new Imagick();
         if ($cachedImage = $this->redis->get($cacheKey)) {
-            $image = new Imagick();
             $image->readImageBlob($cachedImage);
             return $image;
         }
 
-        $image = new Imagick();
         $image->readImageBlob($imageData);
 
         // Получаем высоту и ширину из параметра size
